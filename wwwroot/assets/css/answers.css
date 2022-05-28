@@ -102,6 +102,13 @@
     max-width: var(--dl-size-size-maxwidth);
     justify-content: space-evenly
 }
+.home-stats2 {
+    width: 100%;
+    display: flex;
+    padding: var(--dl-space-space-threeunits);
+    max-width: var(--dl-size-size-maxwidth);
+    justify-content: space-evenly
+}
 
 .home-stat3 {
     display: flex;
@@ -282,6 +289,14 @@
     }
 
     .home-stats1 {
+        align-items: center;
+        padding-top: var(--dl-space-space-twounits);
+        padding-left: var(--dl-space-space-unit);
+        padding-right: var(--dl-space-space-unit);
+        flex-direction: column;
+        padding-bottom: var(--dl-space-space-twounits);
+    }
+    .home-stats2 {
         align-items: center;
         padding-top: var(--dl-space-space-twounits);
         padding-left: var(--dl-space-space-unit);

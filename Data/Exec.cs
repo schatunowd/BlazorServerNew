@@ -34,9 +34,15 @@ namespace BlazorServerNew.Data
             List<string> scores = new List<string>() { };
             List<string> positive = new List<string>();
             List<string> negative = new List<string>();
+            List<string> imdbRatings = new List<string>();
             float last_score_acting = 0, last_score_music = 0, last_score_plot = 0, last_score_spec = 0;
             List<string> alldata = new List<string>();
             List<string> comments = await Program.ParserExec(FilmName, false);
+            if (comments.Last() != "null")
+            {
+                imdbRatings = ImdbParser.getRatingsByFilmId(comments.Last());
+            }
+            comments.Remove(comments.Last());
             List<string> comments_new = Norm(comments);
             foreach (string comment in comments_new)
             {
@@ -113,6 +119,14 @@ namespace BlazorServerNew.Data
             alldata.Add(Math.Round(last_score_music, 1).ToString());
             alldata.Add(Math.Round(last_score_spec, 1).ToString());
             alldata.Add(Math.Round(last_score_plot, 1).ToString());
+            if (imdbRatings.Count == 5)
+            {
+                alldata.Add(imdbRatings[0]);
+                alldata.Add(imdbRatings[1]);
+                alldata.Add(imdbRatings[2]);
+                alldata.Add(imdbRatings[3]);
+                alldata.Add(imdbRatings[4]);
+            }
             return alldata;
         }
     }
