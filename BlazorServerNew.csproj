@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+    <PackageReference Include="Microsoft.ML" Version="1.7.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\blazortest\ConsoleApp1ML.ConsoleApp\ConsoleApp1ML.ConsoleApp.csproj" />
+    <ProjectReference Include="..\blazortest\ConsoleApp1ML.Model\ConsoleApp1ML.Model.csproj" />
+    <ProjectReference Include="..\blazortest\Parser\KinopoiskParser.csproj" />
+    <ProjectReference Include="..\ML.NET\acting_model\acting_model.csproj" />
+    <ProjectReference Include="..\ML.NET\acting_modeL_new\acting_modeL_new.csproj" />
+    <ProjectReference Include="..\ML.NET\Music_model_new_ConsoleApp1\Music_model_new_ConsoleApp1.csproj" />
+    <ProjectReference Include="..\ML.NET\Plot_model_new_ConsoleApp1\Plot_model_new_ConsoleApp1.csproj" />
+    <ProjectReference Include="..\ML.NET\Spec_model_new_ConsoleApp1\Spec_model_new_ConsoleApp1.csproj" />
+  </ItemGroup>
+
+</Project>
