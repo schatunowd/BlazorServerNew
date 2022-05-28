@@ -1,4 +1,51 @@
 @page "/"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await ScrollToFragment();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private async void OnLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        await ScrollToFragment();
+    }
+
+    private async Task ScrollToFragment()
+    {
+        var uri = new Uri(NavigationManager.Uri, UriKind.Absolute);
+        var fragment = uri.Fragment;
+        if (fragment.StartsWith('#'))
+        {
+            // Handle text fragment (https://example.org/#test:~:text=foo)
+            // https://github.com/WICG/scroll-to-text-fragment/
+            var elementId = fragment.Substring(1);
+            var index = elementId.IndexOf(":~:", StringComparison.Ordinal);
+            if (index > 0)
+            {
+                elementId = elementId.Substring(0, index);
+            }
+
+            if (!string.IsNullOrEmpty(elementId))
+            {
+                await JSRuntime.InvokeVoidAsync("BlazorScrollToId", elementId);
+            }
+        }
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +105,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <a href="#services" class="btn-get-started scrollto">Начать</a>
+                <a href="#search" class="btn-get-started scrollto">Начать</a>
             </div>
 
             <div class="row icon-boxes">
@@ -299,19 +346,19 @@
 
                     @* <div class="row justify-content-center">
 
-            <div class="col-md-6">
-                <div>
-                    <br><br>
-                    <h3 class="lookresult">Посмотрим, что у нас вышло...</h3>
-                    <br><br>
-                    Полученная оценка: 10<br><br>
-                    Всего отзывов: скорее всего здесь надо вставлять какие-то outputы<br><br>
-                    Положительных: не ебу как это со скриптом сделать<br><br>
-                    Негативных: <br><br>
-                    Больше всего зрителям понравилось: трахать гриба
-                </div>
-            </div>
-        </div>*@
+                            <div class="col-md-6">
+                                <div>
+                                    <br><br>
+                                    <h3 class="lookresult">Посмотрим, что у нас вышло...</h3>
+                                    <br><br>
+                                    Полученная оценка: 10<br><br>
+                                    Всего отзывов: скорее всего здесь надо вставлять какие-то outputы<br><br>
+                                    Положительных: не ебу как это со скриптом сделать<br><br>
+                                    Негативных: <br><br>
+                                    Больше всего зрителям понравилось: трахать гриба
+                                </div>
+                            </div>
+                        </div>*@
 
                 </div>
 
@@ -429,7 +476,6 @@
             </div>
         </div>
     </footer><!-- End Footer -->
-
     <!-- Vendor JS Files -->
 
 </body>
