@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Acting_modeL_new;
-using Music_model_new_ConsoleApp1;
 using Plot_model_new_ConsoleApp1;
-using Spec_model_new_ConsoleApp1;
 
 
 namespace BlazorServerNew.Data
@@ -27,15 +24,15 @@ namespace BlazorServerNew.Data
         }
         public static async Task<List<string>> GetScoreAsync(string FilmName)
         {
-            List<float> actingScores = new List<float>();
-            List<float> musicScores = new List<float>();
+            List<float> actingScores_50 = new List<float>();
+            List<float> musicScores_50 = new List<float>();
             List<float> plotScores = new List<float>();
-            List<float> specScores = new List<float>();
+            List<float> specScores_50 = new List<float>();
             List<string> scores = new List<string>() { };
             List<string> positive = new List<string>();
             List<string> negative = new List<string>();
             List<string> imdbRatings = new List<string>();
-            float last_score_acting = 0, last_score_music = 0, last_score_plot = 0, last_score_spec = 0;
+            float last_score_acting_50 = 0, last_score_music_50 = 0, last_score_plot = 0, last_score_spec_50 = 0;
             List<string> alldata = new List<string>();
             List<string> comments = await Program.ParserExec(FilmName, false);
             if (comments.Last() != "null")
@@ -69,55 +66,64 @@ namespace BlazorServerNew.Data
             alldata.Add(scores.Count.ToString());
             alldata.Add(positive.Count.ToString());
             alldata.Add(negative.Count.ToString());
-           /* string scoresDescription = ExecIvi.Exec(FilmName);
-            if (scoresDescription != "")
-                alldata.Add(scoresDescription);*/
+            /* string scoresDescription = ExecIvi.Exec(FilmName);
+             if (scoresDescription != "")
+                 alldata.Add(scoresDescription);*/
+
+            Acting_model_50.Acting_model_50.ModelInput sampleData_acting_50;
+            Acting_model_50.Acting_model_50.ModelOutput result_acting_50;
+            Music_model_50.Music_model_50.ModelInput sampleData_music_50;
+            Music_model_50.Music_model_50.ModelOutput result_music_50;
+            Plot_model_new.ModelInput sampleData3;
+            Plot_model_new.ModelOutput result3;
+            Spec_model_50.Spec_model_50.ModelInput sampleData_spec_50;
+            Spec_model_50.Spec_model_50.ModelOutput result_spec_50;
 
             foreach (string comment in comments_new)
             {
-                var sampleData = new MLModel4.ModelInput()
-                {
-                    Reviews = comment
-                };
-                var result = MLModel4.Predict(sampleData);
-                actingScores.Add(result.PredictedLabel);
+                sampleData_acting_50 = new Acting_model_50.Acting_model_50.ModelInput() { Reviews = comment };
+                result_acting_50 = Acting_model_50.Acting_model_50.Predict(sampleData_acting_50);
+                actingScores_50.Add(result_acting_50.PredictedLabel);
 
-                var sampleData2 = new Music_model_new.ModelInput()
-                {
-                    Reviews = comment
-                };
-                var result2 = Music_model_new.Predict(sampleData2);
-                musicScores.Add(result2.PredictedLabel);
 
-                var sampleData3 = new Plot_model_new.ModelInput()
-                {
-                    Reviews = comment
-                };
-                var result3 = Plot_model_new.Predict(sampleData3);
+                sampleData_music_50 = new Music_model_50.Music_model_50.ModelInput() { Reviews = comment };
+                result_music_50 = Music_model_50.Music_model_50.Predict(sampleData_music_50);
+                musicScores_50.Add(result_music_50.PredictedLabel);
+
+
+                //plot
+                sampleData3 = new Plot_model_new.ModelInput() { Reviews = comment };
+                result3 = Plot_model_new.Predict(sampleData3);
                 plotScores.Add(result3.PredictedLabel);
 
-                var sampleData4 = new Spec_model_new.ModelInput()
-                {
-                    Review = comment
-                };
-                var result4 = Spec_model_new.Predict(sampleData4);
-                specScores.Add(result4.PredictedLabel);
+
+                sampleData_spec_50 = new Spec_model_50.Spec_model_50.ModelInput() { Review = comment };
+                result_spec_50 = Spec_model_50.Spec_model_50.Predict(sampleData_spec_50);
+                specScores_50.Add(result_spec_50.PredictedLabel);
             }
-            foreach (float score in actingScores)
-                last_score_acting += score;
-            last_score_acting /= actingScores.Count;
-            foreach (float score in musicScores)
-                last_score_music += score;
-            last_score_music /= musicScores.Count;
             foreach (float score in plotScores)
                 last_score_plot += score;
             last_score_plot /= plotScores.Count;
-            foreach (float score in specScores)
-                last_score_spec += score;
-            last_score_spec /= specScores.Count;
-            alldata.Add(Math.Round(last_score_acting, 1).ToString());
-            alldata.Add(Math.Round(last_score_music, 1).ToString());
-            alldata.Add(Math.Round(last_score_spec, 1).ToString());
+            last_score_plot *= 2;
+
+            foreach (float score in actingScores_50)
+                last_score_acting_50 += score;
+            last_score_acting_50 /= actingScores_50.Count;
+            last_score_acting_50 *= 2;
+
+            foreach (float score in specScores_50)
+                last_score_spec_50 += score;
+            last_score_spec_50 /= specScores_50.Count;
+            last_score_spec_50 *= 2;
+
+            foreach (float score in musicScores_50)
+                last_score_music_50 += score;
+            last_score_music_50 /= musicScores_50.Count;
+            last_score_music_50 *= 2;
+
+            alldata.Add(Math.Round(last_score_acting_50, 1).ToString());
+            alldata.Add(Math.Round(last_score_music_50, 1).ToString());
+            alldata.Add(Math.Round(last_score_spec_50, 1).ToString());
             alldata.Add(Math.Round(last_score_plot, 1).ToString());
             if (imdbRatings.Count == 5)
             {
