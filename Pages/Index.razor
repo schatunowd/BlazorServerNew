@@ -59,10 +59,10 @@
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="~/assets/img/filmsratings/filmaffinity.svg">
+    <link href="icons/kinopoisk.svg" rel="icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -158,7 +158,7 @@
                     <div class="col-lg-6">
                         <p align="justify">
                             Данный сервис разработан в рамках выпускной квалификационной работы "Разработка веб-сервиса для анализа отзывов к фильмам"
-                            При поддержке <a href="https://www.vyatsu.ru/contacts/159">Разовой Елены Владимировны</a>
+                            Разработчик - Шатунов Дмитрий Иванович.
                         </p>
                         <ul>
                             <li><i class="ri-check-double-line"></i> Факультет компьютерных и физико-математических наук</li>
@@ -179,7 +179,6 @@
             </div>
         </section>
         <!-- End About Section -->
-
         <!-- ======= Counts Section ======= -->
         <section id="counts" class="counts section-bg">
             <div class="container">
@@ -193,7 +192,7 @@
 
                     <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
-                            <span >100000</span>
+                            <span>100000</span>
                             <p>Фильмов</p>
                         </div>
                     </div>
@@ -247,12 +246,12 @@
                         </div>
                     }
 
-                    @if (answers == null || answers.Count == 0)
+                    @if (answers == null || answers[0].Count == 0)
                     {
                     }
                     else
                     {
-                        @if (answers.Count == 8)
+                        @if (answers[0].Count == 11)
                         {
                             <div class="ratingsoutput" id="#answerspage">
                                 <link href="./stats.css" rel="stylesheet" />
@@ -263,21 +262,26 @@
                                                 <path d="M1024 397.050l-353.78-51.408-158.22-320.582-158.216 320.582-353.784 51.408 256 249.538-60.432 352.352 316.432-166.358 316.432 166.358-60.434-352.352 256.002-249.538z"></path>
                                             </svg>
                                             <span class="home-text">Полученная оценка</span>
-                                            <h1 class="home-text01">@answers[0]</h1>
+                                            <h1 class="home-text01">@answers[0][0]</h1>
                                         </div>
                                         <div class="home-stat1">
                                             <svg viewBox="0 0 1024 1024" class="home-icon02">
                                                 <path d="M932 550l-114 262q-26 42-74 42h-346q-40 0-70-30t-30-70v-334q0-36 26-62l274-272 18 20q24 24 38 52 6 14 4 28l-40 198h236q34 0 59 26t25 60v46q0 18-6 34zM86 854v-470h84q18 0 31 12t13 30v384q0 18-13 31t-31 13h-84z"></path>
                                             </svg>
                                             <span class="home-text02">Положительные</span>
-                                            <h1 class="home-text03"><span>@answers[2]</span></h1>
+                                            <h1 class="home-text03"><span>@answers[0][2]</span></h1>
                                         </div>
                                         <div class="home-stat2">
                                             <svg viewBox="0 0 1024 1024" class="home-icon04">
                                                 <path d="M810 128h172v512h-172v-512zM640 128q34 0 60 26t26 60v426q0 34-26 60l-280 282-46-46q-18-18-18-44v-14l42-196h-270q-34 0-60-25t-26-59v-86q0-16 6-32l130-300q20-52 78-52h384z"></path>
                                             </svg>
                                             <span class="home-text05">Отрицательные</span>
-                                            <h1 class="home-text06"><span>@answers[3]</span></h1>
+                                            <h1 class="home-text06"><span>@answers[0][3]</span></h1>
+                                        </div>
+                                        <div class="home-stat4">
+                                            <img src="icons/kinopoisk.ico" width="50" height="50">
+                                            <span class="home-text05">Кинопоиск</span>
+                                            <h1 class="home-text11"><span>@answers[0][10]</span></h1>
                                         </div>
                                     </div>
                                     <div class="home-stats1">
@@ -287,35 +291,40 @@
                                                 <path d="M327.196 795.328c55.31-36.15 124.080-63.636 199.788-80.414-15.054-17.784-28.708-37.622-40.492-59.020-30.414-55.234-46.492-116.058-46.492-175.894 0-86.042 0-167.31 30.6-233.762 29.706-64.504 83.128-104.496 159.222-119.488-16.914-76.48-61.94-126.75-181.822-126.75-192 0-192 128.942-192 288 0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h279.006c14.518-12.91 30.596-25.172 48.19-36.672z"></path>
                                             </svg>
                                             <span class="home-text08">Актеры</span>
-                                            <h1 class="home-text09">@answers[4]</h1>
+                                            <h1 class="home-text09">@answers[0][4]</h1>
                                         </div>
                                         <div class="home-stat4">
                                             <svg viewBox="0 0 877.7142857142857 1024" class="home-icon09">
                                                 <path d="M877.714 128v640c0 80.571-120.571 109.714-182.857 109.714s-182.857-29.143-182.857-109.714 120.571-109.714 182.857-109.714c37.714 0 75.429 6.857 109.714 22.286v-306.857l-438.857 135.429v405.143c0 80.571-120.571 109.714-182.857 109.714s-182.857-29.143-182.857-109.714 120.571-109.714 182.857-109.714c37.714 0 75.429 6.857 109.714 22.286v-552.571c0-24 16-45.143 38.857-52.571l475.429-146.286c5.143-1.714 10.286-2.286 16-2.286 30.286 0 54.857 24.571 54.857 54.857z"></path>
                                             </svg>
                                             <span class="home-text10">Музыка и звук</span>
-                                            <h1 class="home-text11"><span>@answers[5]</span></h1>
+                                            <h1 class="home-text11"><span>@answers[0][5]</span></h1>
                                         </div>
                                         <div class="home-stat5">
                                             <svg viewBox="0 0 1024 1024" class="home-icon11">
                                                 <path d="M746.752 513.408l-180.949-104.875 91.221-218.923c2.816-5.717 4.395-12.16 4.395-18.944 0-23.552-18.987-42.667-42.539-42.667-10.624 0.171-19.499 3.541-26.539 9.131-1.408 1.109-2.261 1.792-2.987 2.56l-320 302.933c-9.771 9.259-14.592 22.571-13.056 35.925 1.536 13.355 9.344 25.216 20.949 32l180.992 104.96-92.288 221.44c-7.808 18.603-1.451 40.107 15.104 51.541 7.381 5.035 15.872 7.509 24.277 7.509 10.581 0 21.163-3.968 29.355-11.691l320-303.019c9.771-9.259 14.592-22.571 13.056-35.925-1.579-13.355-9.387-25.216-20.992-31.957z"></path>
                                             </svg>
                                             <span class="home-text13">Зрелищность</span>
-                                            <h1 class="home-text14"><span>@answers[6]</span></h1>
+                                            <h1 class="home-text14"><span>@answers[0][6]</span></h1>
                                         </div>
                                         <div class="home-stat6">
                                             <svg viewBox="0 0 1152 1024" class="home-icon13">
                                                 <path d="M480 0v0c265.096 0 480 173.914 480 388.448s-214.904 388.448-480 388.448c-25.458 0-50.446-1.62-74.834-4.71-103.106 102.694-222.172 121.108-341.166 123.814v-25.134c64.252-31.354 116-88.466 116-153.734 0-9.106-0.712-18.048-2.030-26.794-108.558-71.214-177.97-179.988-177.97-301.89 0-214.534 214.904-388.448 480-388.448zM996 870.686c0 55.942 36.314 104.898 92 131.772v21.542c-103.126-2.318-197.786-18.102-287.142-106.126-21.14 2.65-42.794 4.040-64.858 4.040-95.47 0-183.408-25.758-253.614-69.040 144.674-0.506 281.26-46.854 384.834-130.672 52.208-42.252 93.394-91.826 122.414-147.348 30.766-58.866 46.366-121.582 46.366-186.406 0-10.448-0.45-20.836-1.258-31.168 72.57 59.934 117.258 141.622 117.258 231.676 0 104.488-60.158 197.722-154.24 258.764-1.142 7.496-1.76 15.16-1.76 22.966z"></path>
                                             </svg>
                                             <span class="home-text16">Сюжет</span>
-                                            <h1 class="home-text17">@answers[7]</h1>
+                                            <h1 class="home-text17">@answers[0][7]</h1>
                                         </div>
+                                    </div>
+                                    <p></p>
+                                    <div class="home-stat6">
+                                        <a href=@answers[0][8]>Скачать позитивные отзывы</a>
+                                        <a href=@answers[0][9]>Скачать негативные отзывы</a>
                                     </div>
                                 </div>
                             </div>
                         }
                         else
-                            @if (answers.Count == 13)
+                            @if (answers[0].Count == 16)
                         {
                             <div class="ratingsoutput" id="#answerspage">
                                 <link href="./stats.css" rel="stylesheet" />
@@ -326,21 +335,26 @@
                                                 <path d="M1024 397.050l-353.78-51.408-158.22-320.582-158.216 320.582-353.784 51.408 256 249.538-60.432 352.352 316.432-166.358 316.432 166.358-60.434-352.352 256.002-249.538z"></path>
                                             </svg>
                                             <span class="home-text">Полученная оценка</span>
-                                            <h1 class="home-text01">@answers[0]</h1>
+                                            <h1 class="home-text01">@answers[0][0]</h1>
                                         </div>
                                         <div class="home-stat1">
                                             <svg viewBox="0 0 1024 1024" class="home-icon02">
                                                 <path d="M932 550l-114 262q-26 42-74 42h-346q-40 0-70-30t-30-70v-334q0-36 26-62l274-272 18 20q24 24 38 52 6 14 4 28l-40 198h236q34 0 59 26t25 60v46q0 18-6 34zM86 854v-470h84q18 0 31 12t13 30v384q0 18-13 31t-31 13h-84z"></path>
                                             </svg>
                                             <span class="home-text02">Положительные</span>
-                                            <h1 class="home-text03"><span>@answers[2]</span></h1>
+                                            <h1 class="home-text03"><span>@answers[0][2]</span></h1>
                                         </div>
                                         <div class="home-stat2">
                                             <svg viewBox="0 0 1024 1024" class="home-icon04">
                                                 <path d="M810 128h172v512h-172v-512zM640 128q34 0 60 26t26 60v426q0 34-26 60l-280 282-46-46q-18-18-18-44v-14l42-196h-270q-34 0-60-25t-26-59v-86q0-16 6-32l130-300q20-52 78-52h384z"></path>
                                             </svg>
                                             <span class="home-text05">Отрицательные</span>
-                                            <h1 class="home-text06"><span>@answers[3]</span></h1>
+                                            <h1 class="home-text06"><span>@answers[0][3]</span></h1>
+                                        </div>
+                                        <div class="home-stat4">
+                                            <img src="/icons/kinopoisk.ico" width="50" height="50">
+                                            <span class="home-text05">Кинопоиск</span>
+                                            <h1 class="home-text11"><span>@answers[0][10]</span></h1>
                                         </div>
                                     </div>
                                     <div class="home-stats1">
@@ -350,60 +364,69 @@
                                                 <path d="M327.196 795.328c55.31-36.15 124.080-63.636 199.788-80.414-15.054-17.784-28.708-37.622-40.492-59.020-30.414-55.234-46.492-116.058-46.492-175.894 0-86.042 0-167.31 30.6-233.762 29.706-64.504 83.128-104.496 159.222-119.488-16.914-76.48-61.94-126.75-181.822-126.75-192 0-192 128.942-192 288 0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h279.006c14.518-12.91 30.596-25.172 48.19-36.672z"></path>
                                             </svg>
                                             <span class="home-text08">Актеры</span>
-                                            <h1 class="home-text09">@answers[4]</h1>
+                                            <h1 class="home-text09">@answers[0][4]</h1>
                                         </div>
                                         <div class="home-stat4">
                                             <svg viewBox="0 0 877.7142857142857 1024" class="home-icon09">
                                                 <path d="M877.714 128v640c0 80.571-120.571 109.714-182.857 109.714s-182.857-29.143-182.857-109.714 120.571-109.714 182.857-109.714c37.714 0 75.429 6.857 109.714 22.286v-306.857l-438.857 135.429v405.143c0 80.571-120.571 109.714-182.857 109.714s-182.857-29.143-182.857-109.714 120.571-109.714 182.857-109.714c37.714 0 75.429 6.857 109.714 22.286v-552.571c0-24 16-45.143 38.857-52.571l475.429-146.286c5.143-1.714 10.286-2.286 16-2.286 30.286 0 54.857 24.571 54.857 54.857z"></path>
                                             </svg>
                                             <span class="home-text10">Музыка и звук</span>
-                                            <h1 class="home-text11"><span>@answers[5]</span></h1>
+                                            <h1 class="home-text11"><span>@answers[0][5]</span></h1>
                                         </div>
                                         <div class="home-stat5">
                                             <svg viewBox="0 0 1024 1024" class="home-icon11">
                                                 <path d="M746.752 513.408l-180.949-104.875 91.221-218.923c2.816-5.717 4.395-12.16 4.395-18.944 0-23.552-18.987-42.667-42.539-42.667-10.624 0.171-19.499 3.541-26.539 9.131-1.408 1.109-2.261 1.792-2.987 2.56l-320 302.933c-9.771 9.259-14.592 22.571-13.056 35.925 1.536 13.355 9.344 25.216 20.949 32l180.992 104.96-92.288 221.44c-7.808 18.603-1.451 40.107 15.104 51.541 7.381 5.035 15.872 7.509 24.277 7.509 10.581 0 21.163-3.968 29.355-11.691l320-303.019c9.771-9.259 14.592-22.571 13.056-35.925-1.579-13.355-9.387-25.216-20.992-31.957z"></path>
                                             </svg>
                                             <span class="home-text13">Зрелищность</span>
-                                            <h1 class="home-text14"><span>@answers[6]</span></h1>
+                                            <h1 class="home-text14"><span>@answers[0][6]</span></h1>
                                         </div>
                                         <div class="home-stat6">
                                             <svg viewBox="0 0 1152 1024" class="home-icon13">
                                                 <path d="M480 0v0c265.096 0 480 173.914 480 388.448s-214.904 388.448-480 388.448c-25.458 0-50.446-1.62-74.834-4.71-103.106 102.694-222.172 121.108-341.166 123.814v-25.134c64.252-31.354 116-88.466 116-153.734 0-9.106-0.712-18.048-2.030-26.794-108.558-71.214-177.97-179.988-177.97-301.89 0-214.534 214.904-388.448 480-388.448zM996 870.686c0 55.942 36.314 104.898 92 131.772v21.542c-103.126-2.318-197.786-18.102-287.142-106.126-21.14 2.65-42.794 4.040-64.858 4.040-95.47 0-183.408-25.758-253.614-69.040 144.674-0.506 281.26-46.854 384.834-130.672 52.208-42.252 93.394-91.826 122.414-147.348 30.766-58.866 46.366-121.582 46.366-186.406 0-10.448-0.45-20.836-1.258-31.168 72.57 59.934 117.258 141.622 117.258 231.676 0 104.488-60.158 197.722-154.24 258.764-1.142 7.496-1.76 15.16-1.76 22.966z"></path>
                                             </svg>
                                             <span class="home-text16">Сюжет</span>
-                                            <h1 class="home-text17">@answers[7]</h1>
+                                            <h1 class="home-text17">@answers[0][7]</h1>
                                         </div>
                                     </div>
 
                                     <div class="home-stats2">
                                         <div class="home-stat3">
                                             <img src="data:image/png;base64,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" width="50" height="50">
-                                            <h1 class="home-text09">@answers[8]</h1>
+                                            <span class="home-text05">FilmAffinity</span>
+                                            <h1 class="home-text09">@answers[0][11]</h1>
                                         </div>
                                         <div class="home-stat4">
                                             <img src="https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle_black._CB1509071522_SY230_SX307_AL_.png" width="50" height="50">
-                                            <h1 class="home-text11"><span>@answers[9]</span></h1>
+                                            <span class="home-text05">IMDb</span>
+                                            <h1 class="home-text11"><span>@answers[0][12]</span></h1>
                                         </div>
                                         <div class="home-stat5">
                                             <img src="data:image/png;base64,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" width="50" height="50">
-                                            <h1 class="home-text14"><span>@answers[10]</span></h1>
+                                            <span class="home-text05">metacritic</span>
+                                            <h1 class="home-text14"><span>@answers[0][13]</span></h1>
                                         </div>
                                         <div class="home-stat6">
                                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Rotten_Tomatoes.svg/757px-Rotten_Tomatoes.svg.png" width="50" height="50">
-                                            <h1 class="home-text17">@answers[11]</h1>
+                                            <span class="home-text05">RottenTomatoes</span>
+                                            <h1 class="home-text17">@answers[0][14]</h1>
                                         </div>
                                         <div class="home-stat6">
                                             <img src="data:image/jpeg;base64,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" width="50" height="50">
-                                            <h1 class="home-text17">@answers[12]</h1>
+                                            <span class="home-text05">TMDb</span>
+                                            <h1 class="home-text17">@answers[0][15]</h1>
                                         </div>
+                                       @* <div class="home-stat6">
+                                            <a href=@answers[0][8]>Скачать позитивные отзывы</a>
+                                            <a href=@answers[0][9]>Скачать негативные отзывы</a>
+                                        </div>*@
                                     </div>
                                 </div>
                             </div>
                         }
-                    }
+                        }
 
                     @code {
-                        private List<string>
+                        private List<List<string>>
                         ? answers = null;
                         private bool isLoading = false;
                         public string filmname = "";
@@ -419,10 +442,22 @@
                                 Text = filmname + " " + year;
                             else
                                 Text = filmname;
-                            answers = new List<string>
-                                ();
+                            answers = new List<List<string>>();
                             check = 0;
                             answers = await Data.Exec.GetScoreAsync(Text);
+@*                            List<string> answers2 = new List<string>();
+                            answers2.Add("10");
+                            answers2.Add("5");
+                            answers2.Add("5");
+                            answers2.Add("0");
+                            answers2.Add("9");
+                            answers2.Add("9");
+                            answers2.Add("9");
+                            answers2.Add("10");
+                            answers2.Add("comments/взломать блогеров_08-06-2022_20-02-07_positive.csv");
+                            answers2.Add("comments/взломать блогеров_08-06-2022_20-02-07_negative.csv");
+                            answers2.Add("10");
+                            answers.Add(answers2);*@
                             isLoading = false;
                             check = 1;
                         }
@@ -431,7 +466,6 @@
             </div>
         </section>
         <!-- End MAIN Section -->
-
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact">
             <div class="container" data-aos="fade-up">

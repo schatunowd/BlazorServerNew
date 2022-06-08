@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace BlazorServerNew.Data
 {
     public class Exec
     {
+        private static string path_to_comments = @"D:\study\4.2\diplom\BlazorServerNew\wwwroot\comments\";
         public static string FilmName { get; set; }
         static List<string> Norm(List<string> comments)
         {
@@ -22,7 +24,7 @@ namespace BlazorServerNew.Data
             }
             return all_str;
         }
-        public static async Task<List<string>> GetScoreAsync(string FilmName)
+        public static async Task<List<List<string>>> GetScoreAsync(string FilmName)
         {
             List<float> actingScores_50 = new List<float>();
             List<float> musicScores_50 = new List<float>();
@@ -32,13 +34,23 @@ namespace BlazorServerNew.Data
             List<string> positive = new List<string>();
             List<string> negative = new List<string>();
             List<string> imdbRatings = new List<string>();
+            List<string> alldata_metrics = new List<string>();
+            List<string> alldata_comments_negative = new List<string>();
+            List<string> alldata_comments_positive = new List<string>();
             float last_score_acting_50 = 0, last_score_music_50 = 0, last_score_plot = 0, last_score_spec_50 = 0;
-            List<string> alldata = new List<string>();
+            List<List<string>> alldata = new List<List<string>>();
             List<string> comments = await Program.ParserExec(FilmName, false);
-            if (comments.Last() != "null")
+            string fileName = FilmName + "_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+            string positive_path = path_to_comments + fileName + "_positive.csv";
+            string negative_path = path_to_comments + fileName + "_negative.csv";
+            string truncate_positive_path = "comments/" + fileName + "_positive.csv";
+            string truncate_negative_path = "comments/" + fileName + "_negative.csv";
+            if (comments.Last() != null)
             {
                 imdbRatings = ImdbParser.getRatingsByFilmId(comments.Last());
             }
+            comments.Remove(comments.Last());
+            string kinopoiskRating = comments.Last();
             comments.Remove(comments.Last());
             List<string> comments_new = Norm(comments);
             foreach (string comment in comments_new)
@@ -50,10 +62,19 @@ namespace BlazorServerNew.Data
                 ModelOutput result = ConsumeModel.Predict(input);
                 scores.Add(result.Prediction);
                 if (result.Prediction == "0")
+                {
                     negative.Add(result.Prediction);
+                    alldata_comments_negative.Add(comment);
+                }
                 else
+                {
+                    alldata_comments_positive.Add(comment);
                     positive.Add(result.Prediction);
+                }
             }
+
+            File.WriteAllLines(positive_path, alldata_comments_positive);
+            File.WriteAllLines(negative_path, alldata_comments_negative);
 
             double last_score = 0;
             foreach (string score in scores)
@@ -61,11 +82,10 @@ namespace BlazorServerNew.Data
 
             last_score /= scores.Count;
             last_score *= 10;
-            alldata = new List<string>();
-            alldata.Add(Math.Round(last_score, 1).ToString());
-            alldata.Add(scores.Count.ToString());
-            alldata.Add(positive.Count.ToString());
-            alldata.Add(negative.Count.ToString());
+            alldata_metrics.Add(Math.Round(last_score, 1).ToString());
+            alldata_metrics.Add(scores.Count.ToString());
+            alldata_metrics.Add(positive.Count.ToString());
+            alldata_metrics.Add(negative.Count.ToString());
             /* string scoresDescription = ExecIvi.Exec(FilmName);
              if (scoresDescription != "")
                  alldata.Add(scoresDescription);*/
@@ -121,18 +141,22 @@ namespace BlazorServerNew.Data
             last_score_music_50 /= musicScores_50.Count;
             last_score_music_50 *= 2;
 
-            alldata.Add(Math.Round(last_score_acting_50, 1).ToString());
-            alldata.Add(Math.Round(last_score_music_50, 1).ToString());
-            alldata.Add(Math.Round(last_score_spec_50, 1).ToString());
-            alldata.Add(Math.Round(last_score_plot, 1).ToString());
+            alldata_metrics.Add(Math.Round(last_score_acting_50, 1).ToString());
+            alldata_metrics.Add(Math.Round(last_score_music_50, 1).ToString());
+            alldata_metrics.Add(Math.Round(last_score_spec_50, 1).ToString());
+            alldata_metrics.Add(Math.Round(last_score_plot, 1).ToString());
+            alldata_metrics.Add(truncate_positive_path);
+            alldata_metrics.Add(truncate_negative_path);
+            alldata_metrics.Add(kinopoiskRating);
             if (imdbRatings.Count == 5)
             {
-                alldata.Add(imdbRatings[0]);
-                alldata.Add(imdbRatings[1]);
-                alldata.Add(imdbRatings[2]);
-                alldata.Add(imdbRatings[3]);
-                alldata.Add(imdbRatings[4]);
+                alldata_metrics.Add(imdbRatings[0]);
+                alldata_metrics.Add(imdbRatings[1]);
+                alldata_metrics.Add(imdbRatings[2]);
+                alldata_metrics.Add(imdbRatings[3]);
+                alldata_metrics.Add(imdbRatings[4]);
             }
+            alldata.Add(alldata_metrics);
             return alldata;
         }
     }

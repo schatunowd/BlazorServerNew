@@ -185,7 +185,7 @@ namespace BlazorServerNew.Data
             } while (pagesCounter <= allPages);
             return comments;
         }
-        static async Task<string> getImdbIdByFilmId(string filmId)
+        static async Task<List<string>> getImdbIdByFilmId(string filmId)
         {
             WebRequest request = WebRequest.Create("https://kinopoiskapiunofficial.tech/api/v2.2/films/" + filmId);
             request.Headers.Add("accept", "application/json");
@@ -205,7 +205,11 @@ namespace BlazorServerNew.Data
             }
             response.Close();
             RootImdb datalist = JsonConvert.DeserializeObject<RootImdb>(answer);
-            return datalist.imdbId;
+            List<string> scores = new List<string>();
+            scores.Add(datalist.ratingKinopoisk.ToString());
+            scores.Add(datalist.imdbId);
+            
+            return scores;
         }
 
 
@@ -213,8 +217,9 @@ namespace BlazorServerNew.Data
         {
             string filmId = await getFilmIdByFilmName(filmName);
             List<string> comments = await getCommentsByFilmId(filmId, reviewParam);
-            string imdbId = await getImdbIdByFilmId(filmId);
-            comments.Add(imdbId);
+            List<string> imdbId = await getImdbIdByFilmId(filmId);
+            foreach (string a in imdbId)
+                comments.Add(a);
             return comments;
         }
     }
